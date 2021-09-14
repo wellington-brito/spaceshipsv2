@@ -7,28 +7,26 @@ import 'package:spaceshipsv2/business/starship_business.dart';
 
 class SpaceShipList extends StatefulWidget {
   @override
-  _SpaceShipListState createState() => _SpaceShipListState();  
+  _SpaceShipListState createState() => _SpaceShipListState();
 }
 
-class _SpaceShipListState extends State<SpaceShipList>{
-
+class _SpaceShipListState extends State<SpaceShipList> {
   StarshipBussiness get service => GetIt.I<StarshipBussiness>();
+  late APIResponse<List<Starship>> _starships;
   bool _isLoading = false;
-  late List<Starship> _starships;
 
   @override
-  void initState(){
+  void initState() {
     _fetchSpaceShips();
     super.initState();
   }
 
   _fetchSpaceShips() async {
-    setState((){
+    setState(() {
       _isLoading = true;
     });
 
-    _starships = await service.list() ;
-    print(_starships);
+    _starships = await service.list();
 
     setState(() {
       _isLoading = false;
@@ -39,42 +37,59 @@ class _SpaceShipListState extends State<SpaceShipList>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
+        title: Text('SpaceShipsv2'),
       ),
       body: Builder(
-        builder: (_){
+        builder: (_) {
           if (_isLoading) {
-              return CircularProgressIndicator();
-            }
-            // if (_starships.error) {
-            //   return Center(child: Text(_starships.errorMessage));
-            // }
-              return ListView.separated(
-                separatorBuilder: (_, __) =>
-                    Divider(height: 1, color: Colors.blue),
-                itemBuilder: (_, index) {
-                  return ListTile(
-                    leading: CircleAvatar(
-                      radius: 30.0,
-                      backgroundColor: Colors.blue,
-                      // backgroundImage: NetworkImage(""),
-                    ),
-                    title: Text(
-                     "_starships.data[index].name",
-                      style: TextStyle(color: Theme.of(context).primaryColor),
-                    ),
-                    subtitle: Text(
-                     "_starships.data[index].model",
-                    ),
-                    //onTap: () => Alert(message:  _apiResponse.data[index].blurb, shortDuration: false).show()
-                  );
-                },
-                itemCount: _starships.length,
-              );
+            return CircularProgressIndicator();
+          }
+          if (_starships.error) {
+            return Center(child: Text(_starships.errorMessage));
+          }
+          return ListView.separated(
+              separatorBuilder: (_, __) =>
+                  Divider(height: 0),
+              itemCount: _starships.data.length,
+              itemBuilder: (_, int index) {
+                return Center(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Card(
+                          margin: EdgeInsets.all(12.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                ListTile(
+                                  leading: Icon(Icons.star),
+                                  title: Text(
+                                    _starships.data[index].name.toString(),
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const SizedBox(
+                                      width: 73,
+                                      height: 50,
+                                    ),
+                                    Text(
+                                      _starships.data[index].model.toString(),
+                                    ),
+                                  ],
+                                ),
+                              ]),
+                        ),
+                      ]),
+                );
+              });
         },
       ),
     );
   }
-
-
 }

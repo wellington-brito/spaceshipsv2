@@ -11,10 +11,9 @@ class StarshipBussiness{
 
   list() async{
     SpaceshipsService service = new SpaceshipsService();
-    List<Starship> starships = await service.getSpaceShips();
+    APIResponse<List<Starship>> starships = await service.getSpaceShips();
     return starships;
   }
-
 
   adjustList(){}
  

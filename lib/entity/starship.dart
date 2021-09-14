@@ -1,31 +1,32 @@
 class Starship{
-    String name ='';
-    String model='';
-    String manufacturer='';
-    String costInCredits='';
-    String length='';
-    String maxAtmospheringSpeed='';
-    String crew='';
-    String passengers='';
-    String cargoCapacity='';
-    String consumables='';
-    String hyperdriveRating='';
-    String mglt='';
-    String starshipClass='';
-   
-   Starship({required String name,
-    required String model,
-    required String manufacturer,
-    required String costInCredits,
-    required String length,
-    required String maxAtmospheringSpeed,
-    required String crew,
-    required String passengers,
-    required String cargoCapacity,
-    required String consumables,
-    required String hyperdriveRating,
-    required String mglt,
-    required String starshipClass,
+    String name;
+    String model;
+    String manufacturer;
+    String costInCredits;
+    String length;
+    String maxAtmospheringSpeed;
+    String crew;
+    String passengers;
+    String cargoCapacity;
+    String consumables;
+    String hyperdriveRating;
+    String mglt;
+    String starshipClass;
+
+   Starship({
+    required this.name,
+    required this.model,
+    required this.manufacturer,
+    required this.costInCredits,
+    required this.length,
+    required this.maxAtmospheringSpeed,
+    required this.crew,
+    required this.passengers,
+    required this.cargoCapacity,
+    required this.consumables,
+    required this.hyperdriveRating,
+    required this.mglt,
+    required this.starshipClass,
    });
 
    factory Starship.fromJson(Map<String, dynamic> json) {
@@ -45,4 +46,6 @@ class Starship{
       starshipClass: json['starshipClass']
     );
   }
+
+
 }
